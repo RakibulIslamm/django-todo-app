@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block title %}Edit Task{% endblock title %} 
+
+{% block content %}
+    <div class="container py-3">
+        <h2>Edit Todo</h2>
+        {% load crispy_forms_tags %}
+        <form method='post' novalidate>
+            {% csrf_token %}
+            {{todo_form | crispy}}
+            <button class='btn btn-primary' type="submit">Edit</button>
+        </form>
+    </div>
+{% endblock content %}

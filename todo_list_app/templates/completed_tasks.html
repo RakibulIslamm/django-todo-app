@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% block title %}Completed Todos{% endblock title %} 
+
+{% block content %}
+    <div class="container py-3">
+      {% if completed_tasks|length > 0 %}
+        <table class="table caption-top">
+            <h2 class="py-4" >Completed Todo Lists</h2>
+            <thead class="border-top">
+              <tr>
+                <th scope="col">#ID</th>
+                <th scope="col">Title</th>
+                <th scope="col">Description</th>
+                <th scope="col">Status</th>
+                <th scope="col">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for todo in completed_tasks %}
+              {% if todo.is_completed %}
+              <tr>
+                <th scope="row">{{todo.id}}</th>
+                <td>{{todo.taskTitle}}</td>
+                <td>{{todo.taskDescription|truncatewords:7}}</td>
+                <td> {% if todo.is_completed == True %}
+                    Completed
+                    {% elif todo.is_completed == False %}
+                    Incompleted
+                    {% endif %} </td>
+                <td>
+                    <a href="/delete-task/{{todo.id}}" class='btn btn-danger btn-sm'>Delete</a>
+                    <a href="/edit-task/{{todo.id}}" class='btn btn-info btn-sm'>Edit</a>
+                    {% if todo.is_completed == False %}
+                    <a href="/complete-task/{{todo.id}}" class='btn btn-success btn-sm'>Complete</a>
+                    {% endif %}
+                </td>
+              </tr>
+              {% endif %}
+              {% endfor %}
+            </tbody>
+          </table>
+          {% else %}
+          <h3>No task found</h3>
+          {% endif %}
+    </div>
+{% endblock content %}
